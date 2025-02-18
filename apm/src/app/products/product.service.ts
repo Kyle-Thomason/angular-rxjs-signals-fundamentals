@@ -30,21 +30,16 @@ export class ProductService {
     return this.http.get<Product>(productUrl)
     .pipe(
       tap(() => console.log('In http.get pipeline')),
-      switchMap(product => this.getProductWithReviews(product)),
+      switchMap(product => product.hasReviews ? this.getProductWithReviews(product) : of(product)),
       catchError(err => this.handleError(err))
     );
   }
 
   private getProductWithReviews(product: Product): Observable<Product> {
-    if (product.hasReviews){
-      return this.http.get<Review[]>(this.reviewservice.getReviewUrl(product.id))
-      .pipe(
-        map(reviews => ({...product, reviews} as Product))
-      )
-    } else {
-      return of({} as Product);
-    }
-
+    return this.http.get<Review[]>(this.reviewservice.getReviewUrl(product.id))
+    .pipe(
+      map(reviews => ({...product, reviews} as Product))
+    );
   }
 
   private handleError(err: HttpErrorResponse): Observable<never> {
