@@ -25,4 +25,8 @@ export class CartService {
       items.map(item => item.product.id === cartItem.product.id ? { ...item, quantity } : item));
   }
   
+  removeFromCart(cartItem: CartItem): void {
+    this.cartItems.update(items => 
+      items.filter(item => item.product.id !== cartItem.product.id));
+  }
 }
