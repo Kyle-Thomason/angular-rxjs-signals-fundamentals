@@ -11,7 +11,7 @@ import { Review } from '../reviews/review';
   providedIn: 'root'
 })
 export class ProductService {
-  private productsUrl = 'api/products1';
+  private productsUrl = 'api/products';
 
   private http = inject(HttpClient);
   private errorService = inject(HttpErrorService);

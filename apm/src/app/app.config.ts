@@ -5,14 +5,13 @@ import { AppData } from './app-data';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
-    importProvidersFrom(
-      FormsModule,
-      InMemoryWebApiModule.forRoot(AppData, { delay: 1000 })
-    ),
-    provideRouter(routes)
-  ]
+    importProvidersFrom(FormsModule, InMemoryWebApiModule.forRoot(AppData, { delay: 1000 })),
+    provideRouter(routes),
+    provideAnimations()
+]
 };

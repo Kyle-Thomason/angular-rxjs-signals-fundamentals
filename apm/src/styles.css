@@ -9,3 +9,6 @@ div.card-header {
    margin-top: 20px;
    margin-left: 10px;
  }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
