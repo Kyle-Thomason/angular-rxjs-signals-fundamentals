@@ -7,7 +7,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    MatSnackBarModule
+  ],
+  exports: [
+    MatSnackBarModule
   ]
 })
 export class SharedModule { }
