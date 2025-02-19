@@ -19,4 +19,10 @@ export class CartService {
     this.cartItems.update(items => 
       [...items, { product, quantity: 1 }]);
   }
+  
+  updateQuantity(cartItem: CartItem, quantity: number): void {
+    this.cartItems.update(items => 
+      items.map(item => item.product.id === cartItem.product.id ? { ...item, quantity } : item));
+  }
+  
 }
