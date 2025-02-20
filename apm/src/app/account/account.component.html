@@ -1,21 +1,92 @@
-<h2>Account</h2>
-<h5>Manage your account details</h5>
-<form>
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-    </div>
-    <div>
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" name="confirm-password">
-    </div>
-    <button type="submit">Update Profile</button>
-</form>
+<div class="container mt-5">
+    <h2 class="mb-4">Account Profile</h2>
+    <form (ngSubmit)="onSubmit()">
+      <!-- Personal Information -->
+      <div class="card mb-4">
+        <div class="card-header">Personal Information</div>
+        <div class="card-body">
+          <div class="form-group mb-3">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" class="form-control" required>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Billing Address -->
+      <div class="card mb-4">
+        <div class="card-header">Billing Address</div>
+        <div class="card-body">
+          <div class="form-group mb-3">
+            <label for="billingAddress1">Address Line 1:</label>
+            <input type="text" id="billingAddress1" name="billingAddress1" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="billingAddress2">Address Line 2:</label>
+            <input type="text" id="billingAddress2" name="billingAddress2" class="form-control">
+          </div>
+          <div class="form-group mb-3">
+            <label for="billingCity">City:</label>
+            <input type="text" id="billingCity" name="billingCity" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="billingState">State:</label>
+            <input type="text" id="billingState" name="billingState" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="billingZip">Zip Code:</label>
+            <input type="text" id="billingZip" name="billingZip" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="billingCountry">Country:</label>
+            <input type="text" id="billingCountry" name="billingCountry" class="form-control" required>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Shipping Address -->
+      <div class="card mb-4">
+        <div class="card-header">Shipping Address</div>
+        <div class="card-body">
+          <div class="form-group mb-3">
+            <label for="shippingAddress1">Address Line 1:</label>
+            <input type="text" id="shippingAddress1" name="shippingAddress1" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="shippingAddress2">Address Line 2:</label>
+            <input type="text" id="shippingAddress2" name="shippingAddress2" class="form-control">
+          </div>
+          <div class="form-group mb-3">
+            <label for="shippingCity">City:</label>
+            <input type="text" id="shippingCity" name="shippingCity" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="shippingState">State:</label>
+            <input type="text" id="shippingState" name="shippingState" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="shippingZip">Zip Code:</label>
+            <input type="text" id="shippingZip" name="shippingZip" class="form-control" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="shippingCountry">Country:</label>
+            <input type="text" id="shippingCountry" name="shippingCountry" class="form-control" required>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>

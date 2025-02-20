@@ -3,21 +3,40 @@
 
 div.card-header {
   font-size: large;
- }
- 
- div.card {
-   margin-top: 20px;
-   margin-left: 10px;
- }
+}
+
+div.card {
+  margin-top: 20px;
+  margin-left: 10px;
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-h1, h2, h3, h4, h5,  {
+h1, h2, h3, h4, h5 {
   font-family: "Roboto", "Helvetica Neue", sans-serif;
   color: #182e4c;
 }
 
 h6 {
-  color: #dddfe3
+  color: #dddfe3;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
 }

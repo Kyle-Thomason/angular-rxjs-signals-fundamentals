@@ -1,114 +1,68 @@
-// product-list.component.ts
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { Subject, takeUntil } from 'rxjs';
+
+import { NgIf, NgFor, NgClass } from '@angular/common';
 import { Product } from '../product';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { ProductService } from '../product.service';
-import { NotificationService } from 'src/app/shared/services/notification.service';
+import { catchError, EMPTY, Subscription, tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
-  selector: 'pm-product-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatSnackBarModule
-  ],
-  template: `
-    <div class="container">
-      <h1>{{ pageTitle }}</h1>
-      
-      <div *ngIf="state.errorMessage" class="error-message">
-        {{ state.errorMessage }}
-      </div>
-
-      <div *ngIf="state.products.length > 0" class="product-grid">
-        <div *ngFor="let product of state.products" 
-             [ngClass]="{'selected': product.id === state.selectedProductId}"
-             (click)="onProductSelected(product.id)">
-          {{ product.productName }}
-        </div>
-      </div>
-
-      <div *ngIf="!state.products.length && !state.errorMessage" class="loading">
-        Loading products...
-      </div>
-    </div>
-  `
+    selector: 'pm-product-list',
+    templateUrl: './product-list.component.html',
+    standalone: true,
+imports: [
+  NgIf, 
+  NgFor, 
+  NgClass, 
+  ProductDetailComponent
+],
+providers: [MatSnackBar]
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  private readonly destroy$ = new Subject<void>();
-  private readonly productService = inject(ProductService);
-  private readonly notificationService = inject(NotificationService);
+  pageTitle = 'Products';
+  errorMessage = '';
+  sub! : Subscription;
 
-  readonly pageTitle = 'Products';
-  
-  state = {
-    products: [] as Product[],
-    selectedProductId: null as number | null,
-    errorMessage: ''
-  };
+  private productService = inject(ProductService);
+  private snackBar = inject(MatSnackBar);
+
+  products: Product[] = [];
+
+  selectedProductId: number = 0;
 
   ngOnInit(): void {
-    this.loadProducts();
+    this.sub = this.productService.getProducts()
+    .pipe(
+      tap(() => console.log('In component pipeline:')),
+      catchError(err => {
+        this.errorMessage = err;
+        this.showSnackBar('Error retrieving products', 'Close','error');
+        return EMPTY;
+      })
+    ).subscribe(products => {
+      this.products = products;
+      console.log(this.products);
+    });
+    
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.sub.unsubscribe();
   }
 
-  onProductSelected(productId: number): void {
-    this.updateSelectedProduct(productId);
-    this.notifyProductSelection(productId);
+  onSelected(productId: number): void {
+    this.selectedProductId = productId;
+    this.showSnackBar('Product ' + productId + ' selected', 'Close','info');
   }
 
-  private loadProducts(): void {
-    this.productService.getProducts()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (products) => this.handleProductsLoaded(products),
-        error: (error) => this.handleError(error)
-      });
-  }
-
-  private handleProductsLoaded(products: Product[]): void {
-    this.state = {
-      ...this.state,
-      products,
-      errorMessage: ''
-    };
-  }
-
-  private handleError(error: any): void {
-    this.state = {
-      ...this.state,
-      errorMessage: error,
-      products: []
-    };
-    
-    this.notificationService.showNotification({
-      message: 'Error retrieving products',
-      action: 'Close',
-      type: 'error'
-    });
-  }
-
-  private updateSelectedProduct(productId: number): void {
-    this.state = {
-      ...this.state,
-      selectedProductId: productId
-    };
-  }
-
-  private notifyProductSelection(productId: number): void {
-    this.notificationService.showNotification({
-      message: `Product ${productId} selected`,
-      action: 'Close',
-      type: 'info'
+  showSnackBar(message: string, action: string, type: 'error' | 'info' = 'info'): void {
+    const duration = type === 'error' ? undefined : 2000; // No duration for errors, 2000ms for info
+    this.snackBar.open(message, action, {
+      duration,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
     });
   }
 }
