@@ -12,3 +12,12 @@ div.card-header {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+h1, h2, h3, h4, h5,  {
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  color: #182e4c;
+}
+
+h6 {
+  color: #dddfe3
+}
